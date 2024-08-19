@@ -2,9 +2,13 @@
 
 namespace App\Providers;
 
+use App\Repositories\Interfaces\IQuizRepository;
 use App\Repositories\Interfaces\IUserRepository;
+use App\Repositories\QuizRepository;
 use App\Repositories\UserRepository;
+use App\Services\Interfaces\IQuizService;
 use App\Services\Interfaces\IUserService;
+use App\Services\QuizService;
 use App\Services\UserService;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
     public $bindings = [
         IUserService::class => UserService::class,
         IUserRepository::class => UserRepository::class,
+        IQuizService::class => QuizService::class,
+        IQuizRepository::class => QuizRepository::class,
     ];
 
     /**
