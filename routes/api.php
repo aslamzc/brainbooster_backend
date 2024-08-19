@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 // Guest routes
 Route::middleware('guest')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::get('/quizzes', [QuizController::class, 'getQuizzes'])->name('getQuizzes');
 });
 
 // Protected routes
