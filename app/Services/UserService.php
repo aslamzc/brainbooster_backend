@@ -51,4 +51,12 @@ class UserService extends BaseService implements IUserService
         abort_if($user->hasVerifiedEmail(), Response::HTTP_OK, 'Email already verified.');
         $user->markEmailAsVerified();
     }
+
+    public function emailResend(string $email): void
+    {
+        $user = $this->repo->getUserByEmail($email);
+        abort_unless($user, Response::HTTP_NOT_FOUND, "User not found.");
+        abort_if($user->hasVerifiedEmail(), Response::HTTP_OK, 'Email already verified.');
+        $user->sendEmailVerificationNotification();
+    }
 }

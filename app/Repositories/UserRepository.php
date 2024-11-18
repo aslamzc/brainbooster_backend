@@ -19,6 +19,11 @@ class UserRepository extends BaseRepository implements IUserRepository
         return $this->user->find($userId);
     }
 
+    public function getUserByEmail(string $email): ?User
+    {
+        return $this->user->where('email', $email)->first();
+    }
+
     public function create(array $data): ?User
     {
         return $this->user->create($data);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\Interfaces\IUserService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -61,6 +62,18 @@ class UserController extends Controller
         try {
             $this->service->verifyEmail($id, $hash);
             $response['message'] = "Email verified successfully.";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
+    }
+
+    public function emailResend(Request $request)
+    {
+        try {
+            $this->service->emailResend($request->email);
+            $response['message'] = "Verification email resent.";
             return response($response);
         } catch (Throwable $e) {
             Log::info(__method__, ['message' => $e->getMessage()]);
