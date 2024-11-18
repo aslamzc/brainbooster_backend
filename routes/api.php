@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 // Guest routes
 Route::middleware('guest')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
+    Route::post('/register', [UserController::class, 'register'])->name('register');
     Route::get('/quizzes', [QuizController::class, 'getQuizzes'])->name('getQuizzes');
     Route::get('/test', [QuizController::class, 'test'])->name('test');
 });

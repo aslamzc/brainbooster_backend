@@ -18,4 +18,9 @@ class UserRepository extends BaseRepository implements IUserRepository
     {
         return $this->user->find($userId);
     }
+
+    public function create(array $data): ?User
+    {
+        return $this->user->create($data);
+    }
 }
