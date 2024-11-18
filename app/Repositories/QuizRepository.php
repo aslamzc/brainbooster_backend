@@ -17,6 +17,6 @@ class QuizRepository extends BaseRepository implements IQuizRepository
 
     public function getAllQuiz(): ?Collection
     {
-        return $this->quiz->all();
+        return $this->quiz->get()->load(["user"]);
     }
 }

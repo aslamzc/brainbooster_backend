@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
     Route::get('/quizzes', [QuizController::class, 'getQuizzes'])->name('getQuizzes');
+    Route::get('/test', [QuizController::class, 'test'])->name('test');
 });
 
 // Protected routes
