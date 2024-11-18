@@ -38,11 +38,7 @@ class UserService extends BaseService implements IUserService
 
     public function register(array $data): User
     {
-        $user = $this->repo->create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => $data['password'],
-        ]);
+        $user = $this->repo->create($data);
         abort_unless($user, Response::HTTP_NOT_FOUND, "User not found.");
         return $user;
     }
