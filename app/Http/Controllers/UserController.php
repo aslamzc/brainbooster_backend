@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ForgotPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Services\Interfaces\IUserService;
@@ -74,6 +75,18 @@ class UserController extends Controller
         try {
             $this->service->emailResend($request->email);
             $response['message'] = "Verification email resent.";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
+    }
+
+    public function sendResetLink(ForgotPasswordRequest $request)
+    {
+        try {
+            $this->service->sendResetLink($request->email);
+            $response['message'] = "Password reset link sent.";
             return response($response);
         } catch (Throwable $e) {
             Log::info(__method__, ['message' => $e->getMessage()]);

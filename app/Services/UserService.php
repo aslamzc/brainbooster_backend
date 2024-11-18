@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\Interfaces\IUserRepository;
 use App\Services\Interfaces\IUserService;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Password;
 
 class UserService extends BaseService implements IUserService
 {
@@ -58,5 +59,11 @@ class UserService extends BaseService implements IUserService
         abort_unless($user, Response::HTTP_NOT_FOUND, "User not found.");
         abort_if($user->hasVerifiedEmail(), Response::HTTP_OK, 'Email already verified.');
         $user->sendEmailVerificationNotification();
+    }
+
+    public function sendResetLink(string $email): void
+    {
+        $status = Password::sendResetLink(["email" => $email]);
+        abort_if($status !== Password::RESET_LINK_SENT, Response::HTTP_BAD_REQUEST, 'Unable to send reset link.');
     }
 }

@@ -13,6 +13,9 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/email/verify/{id}/{hash}', [UserController::class, 'emailVerify'])->middleware('signed')->name('verification.verify');
     Route::post('/email/resend', [UserController::class, 'emailResend'])->middleware('throttle:6,1');
+
+    Route::post('/password/forgot', [UserController::class, 'sendResetLink'])->name('password.forgot');
+    Route::post('/password/reset', [UserController::class, 'reset'])->name('password.reset');;
 });
 
 // Protected routes
