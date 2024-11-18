@@ -43,4 +43,12 @@ class UserService extends BaseService implements IUserService
         $user->sendEmailVerificationNotification();
         return $user;
     }
+
+    public function verifyEmail(int $id, string $hash): void
+    {
+        $user = $this->repo->getUserById($id);
+        abort_if(!hash_equals((string) $hash, sha1($user->getEmailForVerification())), Response::HTTP_FORBIDDEN, 'Invalid or expired verification link.');
+        abort_if($user->hasVerifiedEmail(), Response::HTTP_OK, 'Email already verified.');
+        $user->markEmailAsVerified();
+    }
 }

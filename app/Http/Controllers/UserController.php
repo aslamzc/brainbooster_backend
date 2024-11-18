@@ -55,4 +55,16 @@ class UserController extends Controller
             return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
         }
     }
+
+    public function emailVerify($id, $hash)
+    {
+        try {
+            $this->service->verifyEmail($id, $hash);
+            $response['message'] = "Email verified successfully.";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
+    }
 }
