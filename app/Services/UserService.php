@@ -61,9 +61,18 @@ class UserService extends BaseService implements IUserService
         $user->sendEmailVerificationNotification();
     }
 
-    public function sendResetLink(string $email): void
+    public function sendPasswordResetLink(string $email): void
     {
         $status = Password::sendResetLink(["email" => $email]);
         abort_if($status !== Password::RESET_LINK_SENT, Response::HTTP_BAD_REQUEST, 'Unable to send reset link.');
+    }
+
+    public function resetPassword(array $data): void
+    {
+        $status = Password::reset($data, function ($user, $password) {
+            $user->password = $password;
+            $user->save();
+        });
+        abort_if($status !== Password::PASSWORD_RESET, Response::HTTP_BAD_REQUEST, 'Password reset failed.');
     }
 }
