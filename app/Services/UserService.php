@@ -40,6 +40,7 @@ class UserService extends BaseService implements IUserService
     {
         $user = $this->repo->create($data);
         abort_unless($user, Response::HTTP_NOT_FOUND, "User not found.");
+        $user->sendEmailVerificationNotification();
         return $user;
     }
 }
