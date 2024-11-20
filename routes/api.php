@@ -9,6 +9,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [UserController::class, 'login'])->name('login');
     Route::post('/register', [UserController::class, 'register'])->name('register');
     Route::get('/quizzes', [QuizController::class, 'getQuizzes'])->name('getQuizzes');
+    Route::get('/quiz/{id}', [QuizController::class, 'getQuiz'])->name('getQuiz');
     Route::get('/test', [QuizController::class, 'test'])->name('test');
 
     Route::get('/email/verify/{id}/{hash}', [UserController::class, 'emailVerify'])->middleware('signed')->name('verification.verify');

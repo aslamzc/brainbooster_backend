@@ -19,4 +19,10 @@ class QuizRepository extends BaseRepository implements IQuizRepository
     {
         return $this->quiz->get()->load(["user"]);
     }
+    public function getQuizById(int $id): ?Quiz
+    {
+        $quiz = $this->quiz->where('id', $id)->where('status', 'active')->first();
+        if ($quiz) $quiz->load(['user', 'question', 'question.answer']);
+        return $quiz;
+    }
 }

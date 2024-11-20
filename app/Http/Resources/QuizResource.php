@@ -18,8 +18,9 @@ class QuizResource extends JsonResource
             "id" => $this->id,
             "title" => $this->title,
             "description" => $this->description,
-            "created_at" => $this->created_at,
-            "name" => $this->whenLoaded('user', fn($user) => $user->name),
+            "userName" => $this->whenLoaded('user', fn($user) => $user->name) ?? "",
+            "createdAt" => $this->created_at,
+            "questions" => $this->whenLoaded('question', fn($question) => $question->map(fn($question) => new QuestionResource($question))),
         ];
     }
 }

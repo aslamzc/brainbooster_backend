@@ -29,6 +29,18 @@ class QuizController extends Controller
         }
     }
 
+    public function getQuiz($id)
+    {
+        try {
+            $response['data'] = $this->service->getQuiz($id);
+            $response['message'] = "Success";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
+    }
+
     public function test()
     {
 
