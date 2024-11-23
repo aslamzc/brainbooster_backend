@@ -16,7 +16,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/email/resend', [UserController::class, 'emailResend'])->middleware('throttle:6,1');
 
     Route::post('/password/forgot', [UserController::class, 'passwordResetLink'])->name('password.forgot');
-    Route::post('/password/reset', [UserController::class, 'resetPassword'])->name('password.reset');;
+    Route::post('/password/reset', [UserController::class, 'resetPassword'])->name('password.reset');
 });
 
 // Protected routes

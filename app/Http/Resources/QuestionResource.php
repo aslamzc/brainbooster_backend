@@ -15,6 +15,7 @@ class QuestionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            "id" => $this->id,
             "question" => $this->question,
             "answers" => $this->whenLoaded('answer', fn($answer) => $answer->map(fn($answer) => new AnswerResource($answer))),
         ];
