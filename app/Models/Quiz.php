@@ -12,6 +12,13 @@ class Quiz extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'language',
+        "status"
+    ];
+
     public function getCreatedAtAttribute($date)
     {
         return Carbon::parse($date)->format('d M, Y');

@@ -5,7 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\QuizResource\Pages;
 use App\Filament\Resources\QuizResource\RelationManagers;
 use App\Models\Quiz;
+use Filament\Facades\Filament;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,7 +26,24 @@ class QuizResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([]);
+            ->schema([
+                TextInput::make('title')
+                    ->label('Title')
+                    ->required()
+                    ->maxLength(255),
+                TextInput::make('description')
+                    ->label('Description')
+                    ->required()
+                    ->maxLength(255),
+                Select::make('language')
+                    ->label('Language')
+                    ->required()
+                    ->options(config('filament.languages')),
+                Select::make('status')
+                    ->label('Status')
+                    ->required()
+                    ->options(config('filament.status'))
+            ]);
     }
 
     public static function table(Table $table): Table
