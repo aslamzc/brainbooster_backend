@@ -22,4 +22,5 @@ Route::middleware('guest')->group(function () {
 // Protected routes
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'getUser'])->name('user');
+    Route::post('/quiz/create', [QuizController::class, 'create'])->name('quiz.create');
 });

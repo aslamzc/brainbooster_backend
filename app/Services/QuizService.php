@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Http\Resources\QuizResource;
 use App\Repositories\Interfaces\IQuizRepository;
 use App\Services\Interfaces\IQuizService;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -28,6 +30,46 @@ class QuizService extends BaseService implements IQuizService
     {
         $quiz = $this->repo->getQuizById($id);
         abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
+        return new QuizResource($quiz);
+    }
+
+    public function createQuiz(array $data): QuizResource
+    {
+        $quizData = [
+            'title' => $data['title'],
+            'description' => $data['description'],
+            'language' => $data['language'],
+            'status' => $data['status'],
+            'user_id' => Auth::user()->id
+        ];
+        $quiz = $this->repo->create($quizData);
+        abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
+
+        $questionData = [];
+        foreach ($data['questions'] as $key => $question) {
+            $questionData[] = [
+                'question' => $question['question'],
+                'status' => 'active',
+                'order' => $key
+            ];
+        }
+        $questions = $quiz->question()->createMany($questionData);
+        abort_unless($question, Response::HTTP_NOT_FOUND, "Question not found.");
+
+        foreach ($questions as $key => $question) {
+            $answer = $data['questions'][$key];
+            $answerData = [];
+            foreach ($answer['answer'] as $key2 =>  $value) {
+                $answerData[] = [
+                    'answer' => $value,
+                    'is_correct' => $answer['correctAnswer'] == $key2 ? 1 : 0,
+                    'status' => 'active',
+                    'order' => $key2
+                ];
+            }
+            $answers = $question->answer()->createMany($answerData);
+            abort_unless($answers, Response::HTTP_NOT_FOUND, "Answer not found.");
+        }
         return new QuizResource($quiz);
     }
 }

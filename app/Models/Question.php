@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Question extends Model
 {
+    protected $fillable = [
+        'quiz_id',
+        'question',
+        'status',
+        'order'
+    ];
+
     public function answer(): HasMany
     {
         return $this->hasMany(Answer::class)->where('status', 'active')->orderBy('order');

@@ -25,4 +25,9 @@ class QuizRepository extends BaseRepository implements IQuizRepository
         if ($quiz) $quiz->load(['user', 'question', 'question.answer']);
         return $quiz;
     }
+
+    public function create(array $data): ?Quiz
+    {
+        return $this->quiz->create($data);
+    }
 }

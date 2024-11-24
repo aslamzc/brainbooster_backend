@@ -16,7 +16,8 @@ class Quiz extends Model
         'title',
         'description',
         'language',
-        "status"
+        "status",
+        "user_id",
     ];
 
     public function getCreatedAtAttribute($date)

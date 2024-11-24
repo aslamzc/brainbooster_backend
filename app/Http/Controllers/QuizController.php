@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\QuizResource;
 use App\Services\ChatGPTService;
 use App\Services\Interfaces\IQuizService;
+use Illuminate\Http\Request;
 
 class QuizController extends Controller
 {
@@ -33,6 +34,18 @@ class QuizController extends Controller
     {
         try {
             $response['data'] = $this->service->getQuiz($id);
+            $response['message'] = "Success";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
+    }
+
+    public function create(Request $request)
+    {
+        try {
+            $response['data'] = $this->service->createQuiz($request->all());
             $response['message'] = "Success";
             return response($response);
         } catch (Throwable $e) {
