@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Http\Resources\QuizResource;
 use App\Repositories\Interfaces\IQuizRepository;
 use App\Services\Interfaces\IQuizService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Collection;
