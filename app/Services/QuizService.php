@@ -37,8 +37,8 @@ class QuizService extends BaseService implements IQuizService
         $quizData = [
             'title' => $data['title'],
             'description' => $data['description'],
-            'language' => $data['language'],
-            'status' => $data['status'],
+            'language' => $data['language']['value'],
+            'status' => $data['status']['value'],
             'user_id' => Auth::user()->id
         ];
         $quiz = $this->repo->create($quizData);
@@ -61,7 +61,7 @@ class QuizService extends BaseService implements IQuizService
             foreach ($answer['answer'] as $key2 =>  $value) {
                 $answerData[] = [
                     'answer' => $value,
-                    'is_correct' => $answer['correctAnswer'] == $key2 ? 1 : 0,
+                    'is_correct' => $answer['correctAnswer']['value'] == $key2 ? 1 : 0,
                     'status' => 'active',
                     'order' => $key2
                 ];
