@@ -62,6 +62,19 @@ class QuizController extends Controller
             return response($response);
         } catch (Throwable $e) {
             Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
+    }
+
+    public function update($id, Request $request)
+    {
+        try {
+            $response['data'] = $this->service->updateQuiz($request->all(), $id);
+            $response['message'] = "Success";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
         }
     }
 

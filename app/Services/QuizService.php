@@ -78,4 +78,11 @@ class QuizService extends BaseService implements IQuizService
         abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
         return new QuizResource($quiz);
     }
+
+    public function updateQuiz(array $data, int $id): ?QuizResource
+    {
+        $quiz = $this->repo->updateUserQuizById($data, $id, Auth::user()->id);
+        abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
+        return new QuizResource($quiz);
+    }
 }

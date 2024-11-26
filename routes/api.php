@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'getUser'])->name('user');
     Route::post('/quiz/create', [QuizController::class, 'create'])->name('quiz.create');
     Route::get('/quiz/edit/{id}', [QuizController::class, 'edit'])->name('getQuiz');
+    Route::post('/quiz/update/{id}', [QuizController::class, 'update'])->name('quiz.update');
 });
