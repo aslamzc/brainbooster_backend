@@ -54,7 +54,7 @@ class QuizController extends Controller
         }
     }
 
-    public function getUserQuiz($id)
+    public function edit($id)
     {
         try {
             $response['data'] = $this->service->getUserQuizById($id, auth()->user()->id);
