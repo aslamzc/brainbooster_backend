@@ -23,4 +23,5 @@ Route::middleware('guest')->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'getUser'])->name('user');
     Route::post('/quiz/create', [QuizController::class, 'create'])->name('quiz.create');
+    Route::get('/quiz/edit/{id}', [QuizController::class, 'getUserQuiz'])->name('getQuiz');
 });

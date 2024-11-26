@@ -32,6 +32,6 @@ class Quiz extends Model
 
     public function question(): HasMany
     {
-        return $this->hasMany(Question::class)->where('status', 'active')->orderBy('order');
+        return $this->hasMany(Question::class)->orderBy('order');
     }
 }

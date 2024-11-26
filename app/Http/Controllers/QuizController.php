@@ -54,6 +54,17 @@ class QuizController extends Controller
         }
     }
 
+    public function getUserQuiz($id)
+    {
+        try {
+            $response['data'] = $this->service->getUserQuizById($id, auth()->user()->id);
+            $response['message'] = "Success";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+        }
+    }
+
     public function test()
     {
 

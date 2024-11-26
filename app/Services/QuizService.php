@@ -20,14 +20,14 @@ class QuizService extends BaseService implements IQuizService
 
     public function getAllQuiz(): Collection
     {
-        $quizzes = $this->repo->getAllQuiz();
+        $quizzes = $this->repo->getAllActiveQuiz();
         abort_unless($quizzes, Response::HTTP_NOT_FOUND, "Quiz not found.");
         return $quizzes;
     }
 
     public function getQuiz($id): QuizResource
     {
-        $quiz = $this->repo->getQuizById($id);
+        $quiz = $this->repo->getActiveQuizById($id);
         abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
         return new QuizResource($quiz);
     }
@@ -69,6 +69,13 @@ class QuizService extends BaseService implements IQuizService
             $answers = $question->answer()->createMany($answerData);
             abort_unless($answers, Response::HTTP_NOT_FOUND, "Answer not found.");
         }
+        return new QuizResource($quiz);
+    }
+
+    public function getUserQuizById(int $id, int $userId): ?QuizResource
+    {
+        $quiz = $this->repo->getUserQuizById($id, $userId);
+        abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
         return new QuizResource($quiz);
     }
 }

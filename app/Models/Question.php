@@ -16,6 +16,6 @@ class Question extends Model
 
     public function answer(): HasMany
     {
-        return $this->hasMany(Answer::class)->where('status', 'active')->orderBy('order');
+        return $this->hasMany(Answer::class)->orderBy('order');
     }
 }

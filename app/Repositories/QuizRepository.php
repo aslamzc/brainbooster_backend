@@ -15,11 +15,11 @@ class QuizRepository extends BaseRepository implements IQuizRepository
         $this->quiz = $quiz;
     }
 
-    public function getAllQuiz(): ?Collection
+    public function getAllActiveQuiz(): ?Collection
     {
-        return $this->quiz->get()->load(["user"]);
+        return $this->quiz->where('status', 'active')->get()->load(["user"]);
     }
-    public function getQuizById(int $id): ?Quiz
+    public function getActiveQuizById(int $id): ?Quiz
     {
         $quiz = $this->quiz->where('id', $id)->where('status', 'active')->first();
         if ($quiz) $quiz->load(['user', 'question', 'question.answer']);
@@ -29,5 +29,12 @@ class QuizRepository extends BaseRepository implements IQuizRepository
     public function create(array $data): ?Quiz
     {
         return $this->quiz->create($data);
+    }
+
+    public function getUserQuizById(int $id, int $userId): ?Quiz
+    {
+        $quiz = $this->quiz->where('id', $id)->where('user_id', $userId)->first();
+        if ($quiz) $quiz->load(['question', 'question.answer']);
+        return $quiz;
     }
 }
