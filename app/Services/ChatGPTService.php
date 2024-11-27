@@ -10,6 +10,13 @@ class ChatGPTService
     protected $client;
     protected $apiKey;
 
+    private $correctAnswerOptions = [
+        ['value' => 0, 'label' => 'Answer 1'],
+        ['value' => 1, 'label' => 'Answer 2'],
+        ['value' => 2, 'label' => 'Answer 3'],
+        ['value' => 3, 'label' => 'Answer 4']
+    ];
+
     public function __construct()
     {
         $this->client = new Client();
@@ -55,7 +62,7 @@ class ChatGPTService
                 $newData[] = [
                     'question' => $value->question,
                     'answer' => $value->choices,
-                    'correctAnswer' => $value->correctAnswer
+                    'correctAnswer' => $this->correctAnswerOptions[$value->correctAnswer]
                 ];
             }
         }
