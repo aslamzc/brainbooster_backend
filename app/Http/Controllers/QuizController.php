@@ -80,6 +80,13 @@ class QuizController extends Controller
 
     public function textToQuiz(Request $request)
     {
-        return $this->chatGPTService->askChatGPT($request->text);
+        try {
+            $response['data'] =  $this->chatGPTService->askChatGPT($request->text);
+            $response['message'] = "Success";
+            return response($response);
+        } catch (Throwable $e) {
+            Log::info(__method__, ['message' => $e->getMessage()]);
+            return response(["error" => $e->getMessage()], (method_exists($e, 'getStatusCode')) ? $e->getStatusCode() : 500);
+        }
     }
 }

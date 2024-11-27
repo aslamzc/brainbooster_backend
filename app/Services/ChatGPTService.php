@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use GuzzleHttp\Client;
+use Illuminate\Http\Response;
 
 class ChatGPTService
 {
@@ -40,6 +41,21 @@ class ChatGPTService
         ]);
 
         $responseBody = json_decode($response->getBody()->getContents(), true);
-        return $responseBody['choices'][0]['message']['content'] ?? null;
+        $data = $responseBody['choices'][0]['message']['content'] ?? null;
+        abort_unless($data, Response::HTTP_INTERNAL_SERVER_ERROR, "Something went wrong");
+        return $this->formatData(json_decode($data));
+    }
+    
+    private function formatData(array $data): array
+    {
+        $newData = [];
+        foreach ($data as $key => $value) {
+            $newData[] = [
+                'question' => $value->question,
+                'answer' => $value->choices,
+                'correctAnswer' => $value->correctAnswer
+            ];
+        }
+        return $newData;
     }
 }
