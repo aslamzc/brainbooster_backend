@@ -78,9 +78,8 @@ class QuizController extends Controller
         }
     }
 
-    public function test()
+    public function textToQuiz(Request $request)
     {
-
-        return    $this->chatGPTService->askChatGPT("A waterfall is a natural or artificial feature where water flows over a vertical drop or a series of drops in the course of a stream, river, or other water body. Waterfalls are admired for their beauty, power, and calming effect, making them popular natural landmarks and design inspirations.");
+        return $this->chatGPTService->askChatGPT($request->text);
     }
 }

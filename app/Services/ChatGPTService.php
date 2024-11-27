@@ -27,9 +27,14 @@ class ChatGPTService
                 "temperature" => 0.7,
                 "max_tokens" => 300,
                 'messages' => [
-                    ['role' => 'system', 'content' => 'You are a helpful assistant.'],
-                    ['role' => 'user', 'content' => 'Here is a paragraph: ' . $prompt],
-                    ['role' => 'user', 'content' => 'Create five questions and their answers based on the paragraph. Provide the result as an json list of question-answer pairs.']
+                    [
+                        'role' => 'system',
+                        'content' => 'You are a helpful assistant who creates quiz questions.'
+                    ],
+                    [
+                        'role' => 'user',
+                        'content' => "Based on the following paragraph, create as many quiz questions as possible. Each question should have four answer choices, with one correct answer. Provide the output as a JSON list in the format: [{\"question\": \"...\", \"choices\": [\"...\", \"...\", \"...\", \"...\"], \"correctAnswer\": <index_of_correct_choice>}]. Here is the paragraph: \"$prompt\""
+                    ]
                 ],
             ],
         ]);
