@@ -21,6 +21,8 @@ class UserService extends BaseService implements IUserService
     {
         abort_if(!auth()->attempt(["email" => $email, "password" => $password]), Response::HTTP_UNAUTHORIZED, "email or password incorrect.");
         $user = auth()->user();
+        abort_if($user->status == 'inactive', Response::HTTP_UNAUTHORIZED, "Inactive user.");
+        abort_if($user->status == 'blocked', Response::HTTP_UNAUTHORIZED, "Blocked user.");
         abort_if(!$user->hasVerifiedEmail(), Response::HTTP_UNAUTHORIZED, "email address is not verified.");
         return $user;
     }
