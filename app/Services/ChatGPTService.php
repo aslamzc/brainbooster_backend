@@ -42,19 +42,22 @@ class ChatGPTService
 
         $responseBody = json_decode($response->getBody()->getContents(), true);
         $data = $responseBody['choices'][0]['message']['content'] ?? null;
-        abort_unless($data, Response::HTTP_INTERNAL_SERVER_ERROR, "Something went wrong");
-        return $this->formatData(json_decode($data));
+        if ($data) $data = json_decode($data);
+        abort_unless($data, Response::HTTP_UNPROCESSABLE_ENTITY, "Unable to generate questions. Please try again.");
+        return $this->formatData($data);
     }
-    
-    private function formatData(array $data): array
+
+    private function formatData($data): array
     {
         $newData = [];
-        foreach ($data as $key => $value) {
-            $newData[] = [
-                'question' => $value->question,
-                'answer' => $value->choices,
-                'correctAnswer' => $value->correctAnswer
-            ];
+        if ($data) {
+            foreach ($data as  $value) {
+                $newData[] = [
+                    'question' => $value->question,
+                    'answer' => $value->choices,
+                    'correctAnswer' => $value->correctAnswer
+                ];
+            }
         }
         return $newData;
     }
