@@ -82,4 +82,9 @@ class QuizRepository extends BaseRepository implements IQuizRepository
 
         return $quiz;
     }
+
+    public function getUserQuiz(int $userId): ?Collection
+    {
+        return $this->quiz->where('user_id', $userId)->get();
+    }
 }

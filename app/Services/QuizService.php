@@ -8,6 +8,7 @@ use App\Services\Interfaces\IQuizService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Response;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class QuizService extends BaseService implements IQuizService
 {
@@ -84,5 +85,12 @@ class QuizService extends BaseService implements IQuizService
         $quiz = $this->repo->updateUserQuizById($data, $id, Auth::user()->id);
         abort_unless($quiz, Response::HTTP_NOT_FOUND, "Quiz not found.");
         return new QuizResource($quiz);
+    }
+
+    public function getUserQuiz(int $userId): AnonymousResourceCollection
+    {
+        $quizzes = $this->repo->getUserQuiz($userId);
+        abort_unless($quizzes, Response::HTTP_NOT_FOUND, "Quiz not found.");
+        return QuizResource::collection($quizzes);
     }
 }
