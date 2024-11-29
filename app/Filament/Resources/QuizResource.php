@@ -79,4 +79,9 @@ class QuizResource extends Resource
             'edit' => Pages\EditQuiz::route('/{record}/edit'),
         ];
     }
+
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->type === 'admin';
+    }
 }
