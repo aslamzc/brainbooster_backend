@@ -24,7 +24,7 @@
         default => 'primary',
     };
 ?>
-<x-mail::button :url="$actionUrl" :color="$color">
+<x-mail::button :url="str_replace('8000/api/email/verify/', '3000/email-verify/', $actionUrl)" :color="$color">
 {{ $actionText }}
 </x-mail::button>
 @endisset
@@ -52,7 +52,7 @@
     [
         'actionText' => $actionText,
     ]
-) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
+) <span class="break-all">[{{ str_replace('8000/api/email/verify/', '3000/email-verify/', $displayableActionUrl) }}]({{ str_replace('8000/api/email/verify/', '3000/email-verify/', $actionUrl)  }})</span>
 </x-slot:subcopy>
 @endisset
 </x-mail::message>
