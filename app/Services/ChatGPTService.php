@@ -33,7 +33,7 @@ class ChatGPTService
             'json' => [
                 'model' => 'gpt-3.5-turbo',
                 "temperature" => 0.7,
-                "max_tokens" => 300,
+                "max_tokens" => 750,
                 'messages' => [
                     [
                         'role' => 'system',
@@ -41,7 +41,7 @@ class ChatGPTService
                     ],
                     [
                         'role' => 'user',
-                        'content' => "Based on the following paragraph or regarding text, create as many quiz questions as possible. Each question should have four answer choices, with one correct answer. Provide the output as a JSON list in the format: [{\"question\": \"...\", \"choices\": [\"...\", \"...\", \"...\", \"...\"], \"correctAnswer\": <index_of_correct_choice>}]. Here is the paragraph: \"$prompt\""
+                        'content' => "Based on the following paragraph or regarding text, create as many quiz questions as possible. Each question should have four answer choices, with one correct answer. Provide the output as a JSON list in the format: [{\"question\": \"...\", \"choices\": [\"...\", \"...\", \"...\", \"...\"], \"correctAnswer\": <index_of_correct_choice>}]. Here is the paragraph or text: \"$prompt\""
                     ]
                 ],
             ],
