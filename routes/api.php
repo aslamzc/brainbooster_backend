@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/quiz/update/{id}', [QuizController::class, 'update'])->name('quiz.update');
     Route::post('/quiz/generate', [QuizController::class, 'textToQuiz'])->name('quiz.generate');
     Route::get('/quiz/user-quizzes', [QuizController::class, 'getUserQuiz'])->name('quiz.get');
+    Route::delete('/quiz/delete/{id}', [QuizController::class, 'delete'])->name('quiz.delete');
 });
 
 // Guest routes

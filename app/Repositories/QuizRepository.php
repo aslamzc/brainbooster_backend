@@ -87,4 +87,9 @@ class QuizRepository extends BaseRepository implements IQuizRepository
     {
         return $this->quiz->where('user_id', $userId)->get();
     }
+
+    public function delete(int $id): bool
+    {
+        return $this->quiz->where('id', $id)->delete();
+    }
 }
