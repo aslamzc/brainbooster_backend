@@ -114,7 +114,7 @@ class QuizController extends Controller
         }
     }
 
-    public function search($word)
+    public function search(?string $word = "")
     {
         try {
             $response['data'] = $this->service->search($word);

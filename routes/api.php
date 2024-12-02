@@ -17,7 +17,7 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/quizzes', [QuizController::class, 'getQuizzes'])->name('getQuizzes');
 
-    Route::get('/quiz/search/{word}', [QuizController::class, 'search'])->name('search');
+    Route::get('/quiz/search/{word?}', [QuizController::class, 'search'])->name('search');
 });
 
 // Protected routes
