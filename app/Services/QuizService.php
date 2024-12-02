@@ -100,4 +100,11 @@ class QuizService extends BaseService implements IQuizService
         abort_unless($response, Response::HTTP_NOT_FOUND, "Quiz not found.");
         return $response;
     }
+
+    public function search(string $word): AnonymousResourceCollection
+    {
+        $quizzes = $this->repo->search($word);
+        abort_unless($quizzes, Response::HTTP_NOT_FOUND, "Quiz not found.");
+        return QuizResource::collection($quizzes);
+    }
 }

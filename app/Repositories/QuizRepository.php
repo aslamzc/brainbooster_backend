@@ -20,6 +20,7 @@ class QuizRepository extends BaseRepository implements IQuizRepository
     {
         return $this->quiz->where('status', 'active')->get()->load(["user"]);
     }
+
     public function getActiveQuizById(int $id): ?Quiz
     {
         $quiz = $this->quiz->where('id', $id)->where('status', 'active')->first();
@@ -91,5 +92,10 @@ class QuizRepository extends BaseRepository implements IQuizRepository
     public function delete(int $id): bool
     {
         return $this->quiz->where('id', $id)->delete();
+    }
+
+    public function search(string $word): ?Collection
+    {
+        return $this->quiz->where('title', 'like', '%' . $word . '%')->where('status', 'active')->get()->load(["user"]);
     }
 }

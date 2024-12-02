@@ -16,6 +16,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/password/reset', [UserController::class, 'resetPassword'])->name('password.reset');
 
     Route::get('/quizzes', [QuizController::class, 'getQuizzes'])->name('getQuizzes');
+
+    Route::get('/quiz/search/{word}', [QuizController::class, 'search'])->name('search');
 });
 
 // Protected routes
